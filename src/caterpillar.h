@@ -8,11 +8,16 @@ public:
 	Cater();
 
 	int length;
-	std::vector<Vector2D> position;
+	std::deque<Vector2D> position;
+	Vector2D velocity;
 
 	void update();
 	void draw();
 	void drawSection(int i);
+
+	Vector2D pos(int i);
+	int posx(int i);
+	int posy(int i);
 };
 
 #endif

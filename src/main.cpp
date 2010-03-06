@@ -21,7 +21,7 @@ void init () {
 }
 
 void update () {
-	
+	player->update();
 }
 
 void draw () {

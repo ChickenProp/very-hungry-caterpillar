@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdio>
 #include <vector>
+#include <deque>
 #include <cmath>
 #include <cstring>
 
@@ -16,6 +17,7 @@
 
 #include "vector.h"
 #include "texture_loader.h"
+#include "input.h"
 
 #define foreach BOOST_FOREACH
 
