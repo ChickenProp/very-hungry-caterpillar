@@ -18,6 +18,7 @@
 #include "vector.h"
 #include "texture_loader.h"
 #include "input.h"
+#include "font.h"
 
 #define foreach BOOST_FOREACH
 

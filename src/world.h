@@ -12,6 +12,7 @@ public:
 	char getTile(int x, int y);
 
 	Cater *player;
+	Font *font;
 	std::vector<Fruit*> fruit;
 	int width;
 	int height;

@@ -5,7 +5,11 @@ Font::Font () {
 	initialize(32, (char *) "/usr/share/fonts/corefonts/impact.ttf");
 }
 
-Font::Font (int size, char *face) {
+Font::Font (const char *face) {
+	initialize(32, face);
+}
+
+Font::Font (int size, const char *face) {
 	initialize(size, face);
 }
 
@@ -46,16 +50,28 @@ void Font::draw (float x, float y, float w, float h) {
 	glBindTexture(GL_TEXTURE_2D, origtex);
 }
 
-void Font::initialize (int size, char *face) {
+void Font::initialize (int size, const char *face) {
+	if (!TTF_WasInit()) {
+		if (TTF_Init()==-1) {
+			fprintf(stderr, "There was an error with TTF: %s\n",
+			        TTF_GetError());
+			font = NULL;
+			return;
+		}
+		atexit(TTF_Quit);
+	}
+
 	font = TTF_OpenFont(face, size);
 	color = (SDL_Color) {255, 255, 255};
+	text = NULL;
 }
 
-Font *Font::setText (char *t) {
+Font *Font::setText (const char *t) {
 	int len = strlen(t) + 1;
 	char *mem = (char *) malloc(len*sizeof(char));
 	strncpy(mem, t, len);
-	free(text);
+	if (text != NULL)
+		free(text);
 	text = mem;
 	isRendered = 0;
 	return this;

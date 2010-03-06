@@ -20,6 +20,8 @@ World::World() {
 		".                  ."
 		".                  ."
 		"....................";
+	font = new Font("media/vera.ttf");
+	font->setText("On Monday he ate through one apple.");
 }
 
 char World::getTile(int x, int y) {
@@ -37,6 +39,7 @@ void World::draw() {
 			drawTile(getTile(x,y), x, y);
 		}
 	}
+	font->draw(0, 16, 0, 1);
 }
 
 void World::drawTile(char t, int x, int y) {

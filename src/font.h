@@ -11,14 +11,14 @@ class Font {
 public:
 	Font();
 	Font(int size);
-	Font(char *face);
-	Font(int size, char *face);
+	Font(const char *face);
+	Font(int size, const char *face);
 
 	~Font();
 
-	Font *setFace(char *face);
+	Font *setFace(const char *face);
 	Font *setSize(int size);
-	Font *setText(char *text);
+	Font *setText(const char *text);
 	Font *setColor(SDL_Color col);
 
 	void draw();
@@ -28,7 +28,7 @@ public:
 
 protected:
 	static int next_power_of_2(int x);
-	void initialize(int size, char *face);
+	void initialize(int size, const char *face);
 	void render();
 
 	bool isRendered;
