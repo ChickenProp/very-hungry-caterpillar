@@ -1,17 +1,21 @@
 #include "world.h"
 #include "caterpillar.h"
 
+Cater *World::player = NULL;
+const char *World::tiles = NULL;
+Font *World::font = NULL;
+int World::width = 20;
+int World::height = 15;
+
 World::World() {
 	player = new Cater();
-	width = 20;
-	height = 15;
 	tiles = "...................."
 		".                  ."
 		".                  ."
+		". ....        .... ."
 		".                  ."
 		".                  ."
-		".                  ."
-		".                  ."
+		".       ....       ."
 		".                  ."
 		".                  ."
 		".                  ."
@@ -26,6 +30,10 @@ World::World() {
 
 char World::getTile(int x, int y) {
 	return tiles[(height - y - 1)*width + x];
+}
+
+char World::getTile(Vector2D p) {
+	return getTile((int)p.x, (int)p.y);
 }
 
 void World::update() {

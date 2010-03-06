@@ -6,17 +6,18 @@
 class World {
 public:
 	World();
-	void update();
-	void draw();
-	void drawTile(char t, int x, int y);
-	char getTile(int x, int y);
+	static void update();
+	static void draw();
+	static void drawTile(char t, int x, int y);
+	static char getTile(int x, int y);
+	static char getTile(Vector2D p);
 
-	Cater *player;
-	Font *font;
-	std::vector<Fruit*> fruit;
-	int width;
-	int height;
-	const char *tiles;
+	static Cater *player;
+	static Font *font;
+	static std::vector<Fruit*> fruit;
+	static int width;
+	static int height;
+	static const char *tiles;
 };
 
 #endif
