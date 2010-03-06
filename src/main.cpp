@@ -3,16 +3,21 @@
 #include "texture_loader.h"
 #include "SDL_opengl.h"
 
+#include "caterpillar.h"
+
+Cater *player;
+
 void init () {
 	//Window::setFullscreen(true);
 	
 	Window::setInitCallback(TextureLoader::clearAll);
 	
 	// Try to create a window.
-	if (! Window::init(800, 600, "Game Name") ) {
+	if (! Window::init(640, 480, "Game Name") ) {
 		exit(1);
 	}
 	
+	player = new Cater();
 }
 
 void update () {
@@ -51,7 +56,7 @@ void draw () {
 	
 	// Draw
 	
-	
+	player->draw();
 	
 	SDL_GL_SwapBuffers();
 }
