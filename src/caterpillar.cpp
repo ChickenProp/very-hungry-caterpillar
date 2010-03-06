@@ -1,47 +1,54 @@
 #include "caterpillar.h"
 
 Cater::Cater() {
-	length = 1;
+	length = 4;
 	position.push_back(Vector2D(3,2));
 
 	Vector2D velocity(0, 0);
+	Vector2D curMove(0, 0);
+	delta = 0;
 }
 
 void Cater::update () {
-	if (Input::keyPressed(SDLK_LEFT)) {
-		length++;
-		position.push_front(Vector2D(posx(0)-1, posy(0)));
+	if (Input::keyPressed(SDLK_LEFT))
+		velocity = Vector2D(-1, 0);
+	if (Input::keyPressed(SDLK_UP))
+		velocity = Vector2D(0, 1);
+	if (Input::keyPressed(SDLK_RIGHT))
+		velocity = Vector2D(1, 0);
+	if (Input::keyPressed(SDLK_DOWN))
+		velocity = Vector2D(0, -1);
+
+	delta += 0.25f;
+	if (delta >= 1) {
+		delta = 0;
+		curMove = velocity;
+		position.push_front(pos(0) + velocity);
+		if (position.size() > length)
+			position.pop_back();
 	}
-	if (Input::keyPressed(SDLK_UP)) {
-		length++;
-		position.push_front(Vector2D(posx(0), posy(0)+1));
-	}
-	if (Input::keyPressed(SDLK_RIGHT)) {
-		length++;
-		position.push_front(Vector2D(posx(0)+1, posy(0)));
-	}
-	if (Input::keyPressed(SDLK_DOWN)) {
-		length++;
-		position.push_front(Vector2D(posx(0), posy(0)-1));
-	}
+
 }
 
 void Cater::draw () {
-	for (int i = 0; i <= length; i++)
-		drawSection(i);
+	Vector2D next = pos(0)+curMove;
+	for (int i = 0; i < position.size(); i++) {
+		drawSection(i, delta*(next - pos(i)));
+		next = pos(i);
+	}
 }
 
-void Cater::drawSection(int i) {
+void Cater::drawSection(int i, Vector2D offset) {
 	int tex = 0;
 	if (i == 0)
 		tex = TextureLoader::get("media/cater-head.tga");
-	else if (i == length-1)
+	else if (i == position.size()-1)
 		tex = TextureLoader::get("media/cater-tail.tga");
 	else
 		tex = TextureLoader::get("media/cater-mid.tga");
 
-	int x = (int) position[i].x;
-	int y = (int) position[i].y;
+	float x = ((int) position[i].x) + offset.x;
+	float y = ((int) position[i].y) + offset.y;
 
 	glBindTexture(GL_TEXTURE_2D, tex);
 	glColor3f(1,1,1);

@@ -9,11 +9,12 @@ public:
 
 	int length;
 	std::deque<Vector2D> position;
-	Vector2D velocity;
+	Vector2D velocity, curMove;
+	float delta;
 
 	void update();
 	void draw();
-	void drawSection(int i);
+	void drawSection(int i, Vector2D offset);
 
 	Vector2D pos(int i);
 	int posx(int i);

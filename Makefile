@@ -11,8 +11,8 @@ CXX := g++
 
 SDL_CONFIG := sdl-config
 
-CXXFLAGS = -Wall `$(SDL_CONFIG) --cflags`
-LDFLAGS = `$(SDL_CONFIG) --libs` -lSDL_image -lSDL_mixer
+CXXFLAGS = `$(SDL_CONFIG) --cflags`
+LDFLAGS = `$(SDL_CONFIG) --libs` -lSDL_image -lSDL_mixer -lSDL_ttf
 
 # generates debug info for gdb
 ifdef DEBUG

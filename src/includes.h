@@ -23,6 +23,9 @@
 
 /* If we only need the existence of these classes (none of their members), we
    can avoid explicitly including them. */
+class World;
+class Cater;
+class Fruit;
 
 #define D(format, ...)							\
 	do {								\

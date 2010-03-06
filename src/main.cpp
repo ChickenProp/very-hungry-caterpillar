@@ -3,9 +3,9 @@
 #include "texture_loader.h"
 #include "SDL_opengl.h"
 
-#include "caterpillar.h"
+#include "world.h"
 
-Cater *player;
+World *world;
 
 void init () {
 	//Window::setFullscreen(true);
@@ -17,11 +17,11 @@ void init () {
 		exit(1);
 	}
 	
-	player = new Cater();
+	world = new World();
 }
 
 void update () {
-	player->update();
+	world->update();
 }
 
 void draw () {
@@ -56,7 +56,7 @@ void draw () {
 
 	// Draw
 	
-	player->draw();
+	world->draw();
 	
 	SDL_GL_SwapBuffers();
 }
