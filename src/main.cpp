@@ -33,9 +33,7 @@ void draw () {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	
-	int height = (int) (800.0f / Window::getAspectRatio());
-	int width = 800;
-	glOrtho(-width/2, width/2, -height/2, height/2, -1, 1);
+	glOrtho(0, 20, 0, 16, -1, 1);
 	
 	// Or for a perspective matrix:
 	//gluPerspective(45.0f, Window::getAspectRatio(), 1, 400);
@@ -45,15 +43,17 @@ void draw () {
 	glDisable(GL_CULL_FACE);
 	
 	glEnable(GL_BLEND);
+	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	// Camera
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
+		
 	// [Set up camera here]
-	
+	//glOrtho(0, 20, 0, 16, -1, 1);
+
 	// Draw
 	
 	player->draw();

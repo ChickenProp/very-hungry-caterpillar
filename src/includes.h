@@ -15,6 +15,7 @@
 #include "boost/foreach.hpp"
 
 #include "vector.h"
+#include "texture_loader.h"
 
 #define foreach BOOST_FOREACH
 
