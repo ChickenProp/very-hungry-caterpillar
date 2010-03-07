@@ -15,7 +15,9 @@ public:
 	static void load(int level);
 	static void addDecor(int x, int y, char c);
 	static void setPlayer(int x, int y);
+	static bool done();
 
+	static bool m_done;
 	static bool fadeLevel;
 	static float fade;
 	static Cater *player;

@@ -15,6 +15,7 @@ std::vector<Fruit*> World::fruit;
 std::vector<Decor*> World::decor;
 bool World::fadeLevel = 0;
 float World::fade = 0;
+bool World::m_done = 0;
 
 World::World() {
 	topText1 = new Font("media/vera.ttf");
@@ -22,6 +23,10 @@ World::World() {
 	winText = new Font("media/vera.ttf");
 	player = new Cater();
 	load(level);
+}
+
+bool World::done() {
+	return m_done;
 }
 
 void chomp(char *str) {
@@ -43,6 +48,11 @@ void World::load(int l) {
 	free(wavfile);
 
 	FILE *stream = fopen(level, "r");
+	if (stream == NULL) {
+		m_done = 1;
+		free(level);
+		return;
+	}
 	char *buffer = (char *) malloc(80 * sizeof(char));
 
 	buffer[0] = ' ';

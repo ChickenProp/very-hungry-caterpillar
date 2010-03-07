@@ -5,8 +5,10 @@
 
 #include "world.h"
 #include "intro.h"
+#include "epilogue.h"
 
 bool initWorld = 0;
+bool initEpi = 0;
 
 void init () {
 	//Window::setFullscreen(true);
@@ -30,7 +32,11 @@ void update () {
 			new World;
 			initWorld = 1;
 		}
-		World::update();
+		if (!World::done())
+			World::update();
+		else
+			Epilogue::update();
+			
 	}
 //	else
 //		Epilogue::update();
@@ -70,8 +76,10 @@ void draw () {
 	
 	if (!Intro::done())
 		Intro::draw();
-	else if (initWorld)
+	else if (initWorld && !World::done())
 		World::draw();
+	else if (World::done())
+		Epilogue::draw();
 	
 	SDL_GL_SwapBuffers();
 }

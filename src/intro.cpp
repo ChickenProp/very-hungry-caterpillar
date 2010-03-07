@@ -2,7 +2,6 @@
 
 namespace Intro {
 	bool m_done = 0;
-	int stage = 0;
 	std::vector<Font*> texts;
 	int time = 0;
 	int elapsed = 0;
