@@ -82,7 +82,9 @@ Font *Font::setText (const char *t) {
 void Font::render () {
 	GLint origtex = 0;
 
-	if (!font)
+	// Passing an empty string to RenderText_Blended seems to make it return
+	// NULL and crash the rest of the function.
+	if (!font || !text || strlen(text) == 0)
 		return;
 
 	glGenTextures(1, &texture);

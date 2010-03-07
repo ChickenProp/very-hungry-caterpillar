@@ -24,9 +24,10 @@ public:
 	float delta;
 	bool falling;
 
+	void setPos(int x, int y);
 	Vector2D char2vec(char d);
 	char vec2char(Vector2D v);
-	void update();
+	void update(bool input);
 	void draw();
 	void drawSection(int i, Vector2D offset);
 	void die();

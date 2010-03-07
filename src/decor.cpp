@@ -12,13 +12,13 @@ void Decor::draw() {
 	float y = pos.y;
 	glColor3f(1,1,1);
 	glBegin(GL_QUADS);
-	glTexCoord2f(1,0);
-	glVertex2f(x, y);
-	glTexCoord2f(1,1);
-	glVertex2f(x, y-1);
 	glTexCoord2f(0,1);
-	glVertex2f(x-1, y-1);
+	glVertex2f(x, y);
 	glTexCoord2f(0,0);
-	glVertex2f(x-1, y);
+	glVertex2f(x, y+1);
+	glTexCoord2f(1,0);
+	glVertex2f(x+1, y+1);
+	glTexCoord2f(1,1);
+	glVertex2f(x+1, y);
 	glEnd();
 }

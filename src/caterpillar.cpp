@@ -61,27 +61,33 @@ char or_feetdir (or_t o) {
 }
 
 Cater::Cater() {
-	length = 4;
-	position.push_back((feet_t) {Vector2D(5,1), O_BR});
+	length = 1;
+	setPos(5,1);
+}
 
+void Cater::setPos(int x, int y) {
+	position.clear();
+	position.push_back( (feet_t) {Vector2D(x, y), O_BL} );
 	velocity = Vector2D(0, 0);
 	attempt = 'x';
 	delta = 0;
 	falling = 0;
 }
 
-void Cater::update () {
+void Cater::update (bool input) {
 /*  Where does the player want to go?
     This needs to be called every frame, because keyPressed is frame-dependant.
 */
-	if (Input::keyPressed(SDLK_LEFT))
-		attempt = 'l';
-	if (Input::keyPressed(SDLK_UP))
-		attempt = 'u';
-	if (Input::keyPressed(SDLK_RIGHT))
-		attempt = 'r';
-	if (Input::keyPressed(SDLK_DOWN))
-		attempt = 'd';
+	if (input) {
+		if (Input::keyPressed(SDLK_LEFT))
+			attempt = 'l';
+		if (Input::keyPressed(SDLK_UP))
+			attempt = 'u';
+		if (Input::keyPressed(SDLK_RIGHT))
+			attempt = 'r';
+		if (Input::keyPressed(SDLK_DOWN))
+			attempt = 'd';
+	}
 
 
 
