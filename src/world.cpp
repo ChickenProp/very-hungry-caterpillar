@@ -19,8 +19,8 @@ World::World() {
 		".                  ."
 		".                  ."
 		".                  ."
-		".                  ."
-		".                  ."
+		".    .....  .      ."
+		".       ....       ."
 		".                  ."
 		".                  ."
 		"....................";
@@ -41,12 +41,14 @@ void World::update() {
 }
 
 void World::draw() {
-	player->draw();
 	for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
 			drawTile(getTile(x,y), x, y);
 		}
 	}
+
+	player->draw();
+
 	font->draw(0, 16, 0, 1);
 }
 
