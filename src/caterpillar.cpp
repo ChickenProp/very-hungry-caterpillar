@@ -61,7 +61,7 @@ char or_feetdir (or_t o) {
 }
 
 Cater::Cater() {
-	length = 1;
+	length = 2;
 	setPos(5,1);
 }
 
@@ -303,11 +303,10 @@ void Cater::die () {
 }
 
 void Cater::draw () {
-	Vector2D next = pos(0)+velocity;
-	for (int i = 0; i < position.size(); i++) {
-		drawSection(i, delta*(next - pos(i)));
-		next = pos(i);
-	}
+	/* Run through the loop in reverse so the head gets drawn on top. */
+	for (int i = position.size()-1; i > 0; i--)
+		drawSection(i, delta*(pos(i-1) - pos(i)));
+	drawSection(0, delta * velocity);
 }
 
 void Cater::drawSection(int i, Vector2D offset) {

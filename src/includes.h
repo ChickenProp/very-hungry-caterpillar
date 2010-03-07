@@ -19,6 +19,7 @@
 #include "texture_loader.h"
 #include "input.h"
 #include "font.h"
+#include "audio.h"
 
 #define foreach BOOST_FOREACH
 

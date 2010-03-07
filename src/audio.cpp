@@ -28,7 +28,7 @@ void Audio::init () {
 	int rate = 22050;
 	Uint16 format = AUDIO_S16;
 	int channels = 2;
-	int chunksize = 512;
+	int chunksize = 256;
 	if (Mix_OpenAudio(rate, format, channels, chunksize) != 0) {
 		fprintf(stderr, "Unable to initialize audio: %s\n", Mix_GetError());
 		return;

@@ -5,8 +5,6 @@
 
 #include "world.h"
 
-World *world;
-
 void init () {
 	//Window::setFullscreen(true);
 	
@@ -16,12 +14,18 @@ void init () {
 	if (! Window::init(640, 480, "The Very Hungry Caterpillar") ) {
 		exit(1);
 	}
+
+	new World();
 	
-	world = new World();
 }
 
 void update () {
-	world->update();
+//	if (!Intro::done())
+//		Intro::update();
+//	else if (!World::done())
+		World::update();
+//	else
+//		Epilogue::update();
 }
 
 void draw () {
@@ -56,12 +60,13 @@ void draw () {
 
 	// Draw
 	
-	world->draw();
+	World::draw();
 	
 	SDL_GL_SwapBuffers();
 }
 
 int main (int argc, char** argv) {
+	Audio::init();
 	init();
 	
 	const int step = 20; // ms

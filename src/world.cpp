@@ -35,7 +35,12 @@ void World::load(int l) {
 	decor.clear();
 	fade = 0;
 	char *level = (char *)malloc(20*sizeof(char));
-	sprintf(level, "media/level%02d.lvl", l);
+	snprintf(level, 20, "media/level%02d.lvl", l);
+
+	char *wavfile = (char *)malloc(50 * sizeof(char));
+	snprintf(wavfile, 50, "media/audio/level%02d-intro.wav", l);
+	Audio::play(wavfile, 1);
+	free(wavfile);
 
 	FILE *stream = fopen(level, "r");
 	char *buffer = (char *) malloc(80 * sizeof(char));
@@ -139,8 +144,9 @@ void World::update() {
 
 	for (int i = 0; i < fruit.size(); i++) {
 		if (player->pos(0) == fruit[i]->pos) {
+			if (fruit.size() == 1)
+				player->length++;
 			fruit.erase(fruit.begin()+i);
-			player->length++;
 			break;
 		}
 	}
