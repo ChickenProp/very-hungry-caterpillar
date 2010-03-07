@@ -27,6 +27,7 @@
 class World;
 class Cater;
 class Fruit;
+class Decor;
 
 #define D(format, ...)							\
 	do {								\

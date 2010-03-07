@@ -1,31 +1,38 @@
 #include "world.h"
 #include "caterpillar.h"
+#include "fruit.h"
+#include "decor.h"
 
 Cater *World::player = NULL;
 const char *World::tiles = NULL;
 Font *World::font = NULL;
 int World::width = 20;
 int World::height = 15;
+std::vector<Fruit*> World::fruit;
+std::vector<Decor*> World::decor;
 
 World::World() {
 	player = new Cater();
 	tiles = "...................."
 		".                  ."
 		".                  ."
-		". ....        .... ."
 		".                  ."
+		". ....        .... ."
 		".                  ."
 		".       ....       ."
 		".                  ."
 		".                  ."
 		".                  ."
-		".    .....  .      ."
+		".                  ."
 		".       ....       ."
 		".                  ."
 		".                  ."
 		"....................";
 	font = new Font("media/vera.ttf");
-	font->setText("On Monday he ate through one apple.");
+	font->setText(" On Monday he ate through one apple.");
+	fruit.push_back(new Fruit("media/apple.tga", 5,12));
+	decor.push_back(new Decor("media/arrow-lu.tga", 2,2));
+	load(1);
 }
 
 char World::getTile(int x, int y) {
@@ -47,9 +54,17 @@ void World::draw() {
 		}
 	}
 
+	foreach (Fruit *f, fruit) {
+		f->draw();
+	}
+	foreach (Decor *d, decor) {
+		d->draw();
+	}
+
 	player->draw();
 
 	font->draw(0, 16, 0, 1);
+
 }
 
 void World::drawTile(char t, int x, int y) {

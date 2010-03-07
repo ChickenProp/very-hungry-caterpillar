@@ -13,7 +13,7 @@ void init () {
 	Window::setInitCallback(TextureLoader::clearAll);
 	
 	// Try to create a window.
-	if (! Window::init(640, 480, "Game Name") ) {
+	if (! Window::init(640, 480, "The Very Hungry Caterpillar") ) {
 		exit(1);
 	}
 	

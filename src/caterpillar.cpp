@@ -61,12 +61,13 @@ char or_feetdir (or_t o) {
 }
 
 Cater::Cater() {
-	length = 8;
-	position.push_back((feet_t) {Vector2D(5,5), O_BR});
+	length = 4;
+	position.push_back((feet_t) {Vector2D(5,1), O_BR});
 
-	velocity = Vector2D(1, 0);
-	attempt = 'r';
+	velocity = Vector2D(0, 0);
+	attempt = 'x';
 	delta = 0;
+	falling = 0;
 }
 
 void Cater::update () {
@@ -146,10 +147,10 @@ void Cater::update () {
 	                     : feet == O_TL || feet == O_LU ? tl
 	                     : feet == O_TR || feet == O_RU ? tr
 	                     : ' ');
-	char overhead_front = (feet == O_BL || feet == O_RD ? tl
-	                       : feet == O_BR || feet == O_LD ? tr
-	                       : feet == O_TL || feet == O_RU ? bl
-	                       : feet == O_TR || feet == O_LU ? br
+	char overhead_front = (feet == O_BL || feet == O_RU ? tl
+	                       : feet == O_BR || feet == O_LU ? tr
+	                       : feet == O_TL || feet == O_RD ? bl
+	                       : feet == O_TR || feet == O_LD ? br
 	                       : ' ');
 	char overhead_back = (feet == O_BL || feet == O_LD ? tr
 	                      : feet == O_BR || feet == O_RD ? tl
@@ -161,7 +162,23 @@ void Cater::update () {
 	or_t nfeet = feet; // new cling; default don't change
 	char nvel = 'x'; // new vel; default don't change
 
-	D("%c, %c", vel, attempt);
+	if (falling) {
+		if (bot == ' ')
+		    goto fin;
+
+		falling = 0;
+
+		if (attempt == 'l') {
+			nfeet = O_BL;
+			nvel = 'l';
+			goto fin;
+		}
+		else {
+			nfeet = O_BR;
+			nvel = 'r';
+			goto fin;
+		}
+	}
 
 	if (attempt == vel) {
 		if (underfoot == '.' && heading == ' ')
@@ -170,6 +187,10 @@ void Cater::update () {
 			goto fin;
 
 		if (heading == ' ') {
+			if (vel == 'd') {
+				falling = 1;
+				goto fin;
+			}
 			// There must be something behind my feet? I think?
 			nfeet = or_fall(feet);
 			nvel = or_dir(nfeet);
@@ -200,24 +221,31 @@ void Cater::update () {
 		}
 		if (overhead_front == '.') {
 			nfeet = or_unfall(feet);
-			nvel = or_dir(feet);
+			nvel = or_dir(nfeet);
 			goto fin;
 		}
 		if (overhead_back == '.') {
 			nfeet = or_flip1(or_unfall(feet));
-			nvel = or_dir(feet);
+			nvel = or_dir(nfeet);
 			goto fin;
 		}
 	}
 
-	D("can't go where I want.");
 /* In theory, if we get here, we couldn't go in the direction we wanted.
  Can I assume we don't want to go there any more? */
 
 /* There's an exception: if we wanted to go down, we might still be able to. */
-	if (attempt == 'd' && bot == ' ') {
+	if (attempt == 'd' && bot == ' ' && underfoot == '.') {
 		nvel = 'd';
 		nfeet = or_unfall(feet);
+		falling = 1;
+		goto fin;
+	}
+
+	if (vel == 'x' && (attL || attR)) {
+		nvel = attempt;
+		nfeet = attL ? O_BL : O_BR;
+		goto fin;
 	}
 
 	attempt = 'x';

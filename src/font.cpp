@@ -33,6 +33,8 @@ void Font::draw (float x, float y, float w, float h) {
 
 	glBindTexture(GL_TEXTURE_2D, texture);
 
+	glColor3f(0,0,0);
+
 	glBegin(GL_QUADS);
 
 /* Front faces wind counterclockwise by default. */

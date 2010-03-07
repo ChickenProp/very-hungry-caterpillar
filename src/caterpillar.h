@@ -22,6 +22,7 @@ public:
 	Vector2D velocity;
 	char attempt;
 	float delta;
+	bool falling;
 
 	Vector2D char2vec(char d);
 	char vec2char(Vector2D v);
