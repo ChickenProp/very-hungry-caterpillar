@@ -151,6 +151,14 @@ void World::update() {
 		}
 	}
 	if (fruit.size() == 0) {
+		if (fadeLevel && fade == 0) {
+			char *file = (char*) malloc(50 * sizeof(char));
+			snprintf(file, 50,
+			         "media/audio/level%02d-win.wav", level);
+			Audio::play(file);
+			free(file);
+		}
+
 		if (!fadeLevel || fade >= 1.5)
 			load(++level);
 		else

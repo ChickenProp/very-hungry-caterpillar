@@ -4,6 +4,9 @@
 #include "SDL_opengl.h"
 
 #include "world.h"
+#include "intro.h"
+
+bool initWorld = 0;
 
 void init () {
 	//Window::setFullscreen(true);
@@ -15,15 +18,20 @@ void init () {
 		exit(1);
 	}
 
-	new World();
+	Intro::init();
 	
 }
 
 void update () {
-//	if (!Intro::done())
-//		Intro::update();
-//	else if (!World::done())
+	if (!Intro::done())
+		Intro::update();
+	else {
+		if (!initWorld) {
+			new World;
+			initWorld = 1;
+		}
 		World::update();
+	}
 //	else
 //		Epilogue::update();
 }
@@ -60,7 +68,10 @@ void draw () {
 
 	// Draw
 	
-	World::draw();
+	if (!Intro::done())
+		Intro::draw();
+	else if (initWorld)
+		World::draw();
 	
 	SDL_GL_SwapBuffers();
 }

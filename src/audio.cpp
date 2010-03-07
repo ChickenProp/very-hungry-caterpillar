@@ -35,15 +35,11 @@ void Audio::init () {
 	}
 
 	atexit(Mix_CloseAudio);
-	
-	Mix_Music* music = Mix_LoadMUS("audio/music.ogg");
-	
-	Mix_PlayMusic(music, -1);
 }
 
 int Audio::play (std::string file, int count) {
 	Mix_Chunk* chunk = getChunk(file);
-	
+
 	if (! chunk) { return -1; }
 	
 	return Mix_PlayChannel(-1, chunk, count - 1);
