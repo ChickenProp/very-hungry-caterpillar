@@ -182,6 +182,7 @@ void World::draw() {
 
 	player->draw();
 
+	glColor3f(0,0,0);
 	topText1->draw(0, 16, 0, 1);
 	topText2->draw(1, 15, 0, 1);
 
