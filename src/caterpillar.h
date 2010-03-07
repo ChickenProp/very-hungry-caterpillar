@@ -10,6 +10,7 @@ or_t or_fall (or_t orig);
 typedef struct {
 	Vector2D pos;
 	or_t cling;
+	bool clinging;
 } feet_t;
 	
 
@@ -23,6 +24,7 @@ public:
 	char attempt;
 	float delta;
 	bool falling;
+	bool preferredLanding;
 
 	void setPos(int x, int y);
 	Vector2D char2vec(char d);

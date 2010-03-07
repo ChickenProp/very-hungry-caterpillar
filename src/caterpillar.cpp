@@ -67,7 +67,7 @@ Cater::Cater() {
 
 void Cater::setPos(int x, int y) {
 	position.clear();
-	position.push_back( (feet_t) {Vector2D(x, y), O_BL} );
+	position.push_back( (feet_t) {Vector2D(x, y), O_BL, 1} );
 	velocity = Vector2D(0, 0);
 	attempt = 'x';
 	delta = 0;
@@ -90,13 +90,21 @@ void Cater::update (bool input) {
 	}
 
 
-
+	bool f = 1;
+	foreach (feet_t feet, position) {
+		if (feet.clinging == 1) {
+			f = 0;
+			break;
+		}
+	}
 	delta += 0.125f;
+	if (f) delta += 0.125f;
+
 	if (delta < 1)
 		return;
 
 	delta = 0;
-	position.push_front((feet_t) {pos(0) + velocity, cling(0)});
+	position.push_front((feet_t) {pos(0) + velocity, cling(0), !falling});
 	if (position.size() > length)
 		position.pop_back();
 
@@ -174,14 +182,25 @@ void Cater::update (bool input) {
 
 		falling = 0;
 
-		if (attempt == 'l') {
+		/* We don't want to land and then fall again, so change the
+		   attempt after landing. */
+		if (lft == '.' && rgt == '.') {
+			die();
+			nvel = 't';
+			nfeet = (preferredLanding ? O_LU : O_RU);
+		}
+		if (lft != '.'
+		    && (attempt == 'l' || rgt == '.'
+		        || (attempt != 'r' && preferredLanding))) {
 			nfeet = O_BL;
 			nvel = 'l';
+			attempt = 'l';
 			goto fin;
 		}
 		else {
 			nfeet = O_BR;
 			nvel = 'r';
+			attempt = 'r';
 			goto fin;
 		}
 	}
@@ -241,10 +260,16 @@ void Cater::update (bool input) {
  Can I assume we don't want to go there any more? */
 
 /* There's an exception: if we wanted to go down, we might still be able to. */
+/* We don't want to fall if there's nothing underfoot, that looks ridiculous.
+   We should just turn the corner in that situation. (At least when "underfoot"
+   is above, which it is because trying to go down when we're going vertically
+   works anyway.) */
 	if (attempt == 'd' && bot == ' ' && underfoot == '.') {
 		nvel = 'd';
 		nfeet = or_unfall(feet);
 		falling = 1;
+		preferredLanding = (feet == O_TL || feet == O_BL);
+		position[0].clinging = 0;
 		goto fin;
 	}
 

@@ -157,6 +157,7 @@ void World::update() {
 			if (fruit.size() == 1)
 				player->length++;
 			fruit.erase(fruit.begin()+i);
+			Audio::play("media/audio/eat.wav");
 			break;
 		}
 	}
@@ -206,6 +207,7 @@ void World::draw() {
 		glVertex2f(0, height);
 		glEnd();
 
+		glColor3f(0, 0, 0);
 		winText->draw(1, 15, 0, 1);
 	}
 }
